@@ -10,11 +10,10 @@ public class Producto {
     private int stock;
     private String tipo;
     private String garantia;
-    private String estado;
     // private String create_at; 
 
     public String getCodigo() {
-        return codigo;
+        return codigo;  
     }
 
     public void setCodigo(String codigo) {
@@ -77,12 +76,6 @@ public class Producto {
         this.garantia = garantia;
     }
 
-    public String getEstado() {
-        return estado;
-    }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     
 }
