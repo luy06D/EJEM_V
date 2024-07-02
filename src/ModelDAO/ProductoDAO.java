@@ -23,9 +23,9 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public boolean insertProduct(Producto p) {
-        String atributos = "idproducto, nombreP, marca, modelo, precio, stock, tipo, garantia";
+        String atributos = "idproducto, nombreP, marca, modelo, precio, stock, tipo, garantia, create_at";
         try{
-            String queryInsert = "INSERT INTO Productos (" +atributos+ " ) VALUES (?,?,?,?,?,?,?,?)";
+            String queryInsert = "INSERT INTO Productos (" +atributos+ " ) VALUES (?,?,?,?,?,?,?,?,?)";
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryInsert);
             ps.setString(1, p.getCodigo());
@@ -36,6 +36,7 @@ public class ProductoDAO implements Producto_Interface{
             ps.setInt(6, p.getStock());
             ps.setString(7, p.getTipo());
             ps.setString(8, p.getGarantia());
+            ps.setString(9, p.getCreate_at());
             
             ps.executeUpdate();
             connec.close();
@@ -48,7 +49,29 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public boolean updateProduct(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         
+        try{
+              String sql = "UPDATE productos SET nombreP=?, marca=?, modelo=?, precio=?, stock=?, tipo=?, garantia=? WHERE idproducto=?";
+
+            connec = conexion.getConexion();
+            ps = connec.prepareStatement(sql);
+             ps.setString(1, p.getCodigo());
+            ps.setString(2, p.getNombreP());
+            ps.setString(3, p.getMarca());
+            ps.setString(4, p.getModelo());
+            ps.setDouble(5, p.getPrecio());
+            ps.setInt(6, p.getStock());
+            ps.setString(7, p.getTipo());
+            ps.setString(8, p.getGarantia());
+            ps.execute();
+            return true;
+            
+            
+        }catch(Exception e){
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null , e);
+        }
+       return false;
+       
     }
 
     @Override
@@ -58,7 +81,28 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public Producto listOne(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            String queryListOne = "SELECT * FROM productos where idproducto = "+codigo;
+            connec = conexion.getConexion();
+            ps = connec.prepareStatement(queryListOne);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                p = new Producto();
+                p.setCodigo(rs.getString("idproducto"));
+                p.setNombreP(rs.getString("nombreP"));
+                p.setMarca(rs.getString("marca"));
+                p.setModelo(rs.getString("modelo"));
+                p.setPrecio(rs.getDouble("precio"));
+                p.setStock(rs.getInt("stock"));
+                p.setTipo(rs.getString("tipo"));
+                p.setGarantia(rs.getString("garantia"));
+                
+            }
+            connec.close(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
     }
 
     @Override

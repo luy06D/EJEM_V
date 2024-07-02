@@ -10,7 +10,16 @@ public class Producto {
     private int stock;
     private String tipo;
     private String garantia;
-    // private String create_at; 
+    private String create_at; 
+
+    public String getCreate_at() {
+        return create_at;
+    }
+
+    public void setCreate_at(String create_at) {
+        this.create_at = create_at;
+    }
+    
 
     public String getCodigo() {
         return codigo;  
@@ -75,6 +84,7 @@ public class Producto {
     public void setGarantia(String garantia) {
         this.garantia = garantia;
     }
+
 
 
     

@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/ModelDAO/b.java</file>
-            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/Connection/Conexion.java</file>
-            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/Views/b.java</file>
+            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/ModelDAO/ProductoDAO.java</file>
+            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/Views/Jframe_Productos.java</file>
+            <file>file:/C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/Models/Producto.java</file>
         </group>
     </open-files>
 </project-private>
