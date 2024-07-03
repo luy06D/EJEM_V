@@ -10,6 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Jframe_Productos extends javax.swing.JFrame {
+    
+    DefaultTableModel table = new DefaultTableModel(); 
+    
     String codigo;
     ProductoDAO pd = new ProductoDAO();
     Producto pro;
@@ -17,6 +20,8 @@ public class Jframe_Productos extends javax.swing.JFrame {
     public Jframe_Productos() {
         initComponents();
         this.setLocationRelativeTo(this);
+        mostrarCabecera();
+        listarProductos();
         
     }
 
@@ -53,7 +58,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbProductos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -130,7 +135,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
 
         btnEliminar.setText("Eliminar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -141,7 +146,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbProductos);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -260,7 +265,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
@@ -331,6 +336,26 @@ public class Jframe_Productos extends javax.swing.JFrame {
         resetForm();
     }//GEN-LAST:event_btnEditarActionPerformed
     
+    public void listarProductos(){
+        
+        ArrayList<Producto> vp = new ArrayList<>();
+        vp = pd.ListProduct();
+        
+        for(int i=0 ; i<vp.size(); i++){
+            Object dataProduct[] = 
+            {vp.get(i).getNombreP(),
+            vp.get(i).getMarca(),
+            vp.get(i).getModelo(),
+            vp.get(i).getTipo(),
+            vp.get(i).getStock(),
+            vp.get(i).getPrecio()};
+            
+            table.addRow(dataProduct);
+            
+        }
+    }
+    
+    
     public void resetForm(){
         txtBuscar.setText(null);
         txtCodigo.setText(null);
@@ -345,7 +370,16 @@ public class Jframe_Productos extends javax.swing.JFrame {
         txtCodigo.requestFocus();
     }
     
-    
+    public void mostrarCabecera(){
+        table.addColumn("Producto");
+        table.addColumn("Marca");
+        table.addColumn("Modelo");
+        table.addColumn("Tipo");
+        table.addColumn("Cantidad");
+        table.addColumn("Precio");
+        tbProductos.setModel(table);
+        
+    }
     
     /**
      * @param args the command line arguments
@@ -405,7 +439,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbProductos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;

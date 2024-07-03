@@ -107,7 +107,32 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public ArrayList<Producto> ListProduct() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            
+            String querySelect = "SELECT * FROM productos";
+            connec = conexion.getConexion();
+            
+            ps = connec.prepareStatement(querySelect);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                p = new Producto();
+                p.setNombreP(rs.getString("nombreP"));
+                p.setMarca(rs.getString("marca"));
+                p.setModelo(rs.getString("modelo"));
+                p.setTipo(rs.getString("tipo"));
+                p.setStock(rs.getInt("stock"));
+                p.setPrecio(rs.getDouble("precio"));
+                vectorProduct.add(p);
+            }          
+            
+        }catch (Exception e){
+           Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, e);  
+        }
+        
+        return vectorProduct;
+        
+       
+      
     }
     
     
