@@ -76,7 +76,20 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public boolean deleteProduct(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try{
+           String queryDelete = "DELETE FROM productos WHERE idproducto ="+ p.getCodigo();
+           connec = conexion.getConexion();
+           ps = connec.prepareStatement(queryDelete);
+           ps.executeUpdate();
+           connec.close();
+            
+        }catch(Exception e){
+           Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, e); 
+        }
+        
+        return false;
+        
     }
 
     @Override
@@ -103,6 +116,7 @@ public class ProductoDAO implements Producto_Interface{
             Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return p;
+
     }
 
     @Override

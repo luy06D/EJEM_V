@@ -23,15 +23,18 @@ public class Jframe_Productos extends javax.swing.JFrame {
         mostrarCabecera();
         listarProductos();
         
+        
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -60,33 +63,33 @@ public class Jframe_Productos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbProductos = new javax.swing.JTable();
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 853, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 454, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab1", jPanel1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 853, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 454, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("tab2", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -134,6 +137,11 @@ public class Jframe_Productos extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -202,7 +210,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
                         .addGap(499, 499, 499)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +260,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
                         .addComponent(jLabel9)))
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Productos", jPanel3);
@@ -261,7 +269,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,53 +279,12 @@ public class Jframe_Productos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        Date d = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaActual = df.format(d);
-        
-        Producto p = new Producto();
-        String tipoSelect = (String) cbTipo.getSelectedItem();
-        String garantiaSelect = (String) cbGarantia.getSelectedItem();
-        
-        p.setCodigo(txtCodigo.getText());
-        p.setNombreP(txtProducto.getText());
-        p.setMarca(txtMarca.getText());
-        p.setModelo(txtModelo.getText());
-        p.setPrecio(Double.parseDouble(txtPrecio.getText()));
-        p.setStock(Integer.parseInt(txtCantidad.getText()));
-        p.setTipo(tipoSelect);
-        p.setGarantia(garantiaSelect);
-        p.setCreate_at(fechaActual);
-        pd.insertProduct(p);
-        
-        JOptionPane.showMessageDialog(this, "Registrado con exito");
-        resetForm();
-        
-        
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        pd.deleteProduct(codigo);
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        codigo = txtBuscar.getText();
-        pro = new Producto();
-        pro = pd.listOne(codigo);
-        
-        if(pro == null){
-            JOptionPane.showMessageDialog(this, "El producto no existe"); 
-        }else{
-            txtProducto.setText(pro.getNombreP());
-            txtMarca.setText(pro.getMarca());
-            txtModelo.setText(pro.getModelo());
-            txtPrecio.setText(Double.toString(pro.getPrecio()));
-            txtCantidad.setText(Integer.toString(pro.getStock()));
-            cbTipo.setSelectedItem(pro.getTipo());
-            cbGarantia.setSelectedItem(pro.getGarantia());
-            
-             pro = new Producto();
-             pro = null;
-        } 
-        
-    }//GEN-LAST:event_btnBuscarActionPerformed
+        resetForm();
+        JOptionPane.showMessageDialog(this, "Producto eliminado");
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         pro = new Producto();
@@ -329,17 +296,66 @@ public class Jframe_Productos extends javax.swing.JFrame {
         pro.setStock(Integer.parseInt(txtCantidad.getText()));
         pro.setTipo(cbTipo.getSelectedItem().toString());
         pro.setGarantia(cbGarantia.getSelectedItem().toString());
-        
+
         pd.updateProduct(pro);
         JOptionPane.showMessageDialog(this, "Datos del producto actualizado");
-        
+
         resetForm();
     }//GEN-LAST:event_btnEditarActionPerformed
-    
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        codigo = txtBuscar.getText();
+        pro = new Producto();
+        pro = pd.listOne(codigo);
+
+        if(pro == null){
+            JOptionPane.showMessageDialog(this, "El producto no existe");
+            resetForm();
+        }else{
+            txtProducto.setText(pro.getNombreP());
+            txtMarca.setText(pro.getMarca());
+            txtModelo.setText(pro.getModelo());
+            txtPrecio.setText(Double.toString(pro.getPrecio()));
+            txtCantidad.setText(Integer.toString(pro.getStock()));
+            cbTipo.setSelectedItem(pro.getTipo());
+            cbGarantia.setSelectedItem(pro.getGarantia());
+
+            pro = new Producto();
+            pro = null;
+
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        Date d = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaActual = df.format(d);
+
+        Producto p = new Producto();
+        String tipoSelect = (String) cbTipo.getSelectedItem();
+        String garantiaSelect = (String) cbGarantia.getSelectedItem();
+
+        p.setCodigo(txtCodigo.getText());
+        p.setNombreP(txtProducto.getText());
+        p.setMarca(txtMarca.getText());
+        p.setModelo(txtModelo.getText());
+        p.setPrecio(Double.parseDouble(txtPrecio.getText()));
+        p.setStock(Integer.parseInt(txtCantidad.getText()));
+        p.setTipo(tipoSelect);
+        p.setGarantia(garantiaSelect);
+        p.setCreate_at(fechaActual);
+        pd.insertProduct(p);
+
+        JOptionPane.showMessageDialog(this, "Registrado con exito");
+        resetForm();
+        //  refreshTable();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
     public void listarProductos(){
         
         ArrayList<Producto> vp = new ArrayList<>();
         vp = pd.ListProduct();
+        
         
         for(int i=0 ; i<vp.size(); i++){
             Object dataProduct[] = 
@@ -354,6 +370,14 @@ public class Jframe_Productos extends javax.swing.JFrame {
             
         }
     }
+    
+    public void refreshTable(){
+        
+        DefaultTableModel tableModel = (DefaultTableModel) tbProductos.getModel();
+        tableModel.setRowCount(0);
+        listarProductos();
+    }
+    
     
     
     public void resetForm(){
@@ -433,12 +457,14 @@ public class Jframe_Productos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTable tbProductos;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCantidad;
