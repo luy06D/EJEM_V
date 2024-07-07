@@ -23,20 +23,19 @@ public class ProductoDAO implements Producto_Interface{
 
     @Override
     public boolean insertProduct(Producto p) {
-        String atributos = "idproducto, nombreP, marca, modelo, precio, stock, tipo, garantia, create_at";
+        String atributos = "nombreP, marca, modelo, precio, stock, tipo, garantia, create_at";
         try{
-            String queryInsert = "INSERT INTO Productos (" +atributos+ " ) VALUES (?,?,?,?,?,?,?,?,?)";
+            String queryInsert = "INSERT INTO Productos (" +atributos+ " ) VALUES (?,?,?,?,?,?,?,?)";
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryInsert);
-            ps.setString(1, p.getCodigo());
-            ps.setString(2, p.getNombreP());
-            ps.setString(3, p.getMarca());
-            ps.setString(4, p.getModelo());
-            ps.setDouble(5, p.getPrecio());
-            ps.setInt(6, p.getStock());
-            ps.setString(7, p.getTipo());
-            ps.setString(8, p.getGarantia());
-            ps.setString(9, p.getCreate_at());
+            ps.setString(1, p.getNombreP());
+            ps.setString(2, p.getMarca());
+            ps.setString(3, p.getModelo());
+            ps.setDouble(4, p.getPrecio());
+            ps.setInt(5, p.getStock());
+            ps.setString(6, p.getTipo());
+            ps.setString(7, p.getGarantia());
+            ps.setString(8, p.getCreate_at());
             
             ps.executeUpdate();
             connec.close();
@@ -56,7 +55,6 @@ public class ProductoDAO implements Producto_Interface{
 
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryUpdate);
-           // ps.setString(1, p.getCodigo());
             ps.setString(1, p.getNombreP());
             ps.setString(2, p.getMarca());
             ps.setString(3, p.getModelo());
