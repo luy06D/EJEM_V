@@ -2,16 +2,29 @@
 package Views;
 import Models.Usuario;
 import ModelDAO.UsuarioDAO;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Jframe_Login extends javax.swing.JFrame {
     
     UsuarioDAO usuDao = new UsuarioDAO();
+    private Image background_imagen;
 
   
     public Jframe_Login() {
         initComponents();
         this.setLocationRelativeTo(this);
+        setbackground_Panel("C:/Users/LUIS/Documents/NetBeansProjects/Sistema_ventas/src/img/login.png", panelLogin);
+    }
+    
+       // Metodo donde le pasaremos la imagen a cargar.
+    public void setbackground_Panel(String ruta_imagen, JPanel panel1) {
+        panel1.setOpaque(false);
+        background_imagen = new ImageIcon(ruta_imagen).getImage();
+        panel1.repaint();
     }
 
  
@@ -20,7 +33,21 @@ public class Jframe_Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panelLogin = new javax.swing.JPanel(){
+
+            public void paintComponent(Graphics g){
+                int width = this.getSize().width;
+                int height = this.getSize().height;
+
+                if(background_imagen != null){
+                    g.drawImage(background_imagen, 0, 0, width, height , null);
+
+                }
+                super.paintComponent(g);
+
+            }
+
+        };
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -32,14 +59,14 @@ public class Jframe_Login extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelLoginLayout = new javax.swing.GroupLayout(panelLogin);
+        panelLogin.setLayout(panelLoginLayout);
+        panelLoginLayout.setHorizontalGroup(
+            panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 348, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelLoginLayout.setVerticalGroup(
+            panelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -88,11 +115,11 @@ public class Jframe_Login extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnIniciar)
                         .addGap(73, 73, 73)))
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
@@ -129,12 +156,22 @@ public class Jframe_Login extends javax.swing.JFrame {
       
       Usuario logueado = usuDao.login(usuario, contraseña);
       
+   
+      if (usuario.isEmpty() || contraseña.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Login", JOptionPane.WARNING_MESSAGE);
+        return; 
+      }
+      
       if(logueado != null){
-        JOptionPane.showMessageDialog(this, "Login exitoso!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Bienvenido! " + usuario , "Login", JOptionPane.INFORMATION_MESSAGE);
         Jframe_inicio jinicio = new Jframe_inicio();
         jinicio.setVisible(true);
       }else{
-          JOptionPane.showMessageDialog(this, "Nombre de usuario o clave incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+          JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta", "Login", JOptionPane.ERROR_MESSAGE);
+          txtUsuario.setText(null);
+          txtContraseña.setText(null);
+          
+          txtUsuario.requestFocus();
       }
       
       
@@ -183,7 +220,7 @@ public class Jframe_Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel panelLogin;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
