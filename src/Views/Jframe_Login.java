@@ -164,7 +164,7 @@ public class Jframe_Login extends javax.swing.JFrame {
       
       if(logueado != null){
         JOptionPane.showMessageDialog(this, "Bienvenido! " + usuario , "Login", JOptionPane.INFORMATION_MESSAGE);
-        Jframe_inicio jinicio = new Jframe_inicio();
+        Jframe_inicioP jinicio = new Jframe_inicioP();
         jinicio.setVisible(true);
       }else{
           JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta", "Login", JOptionPane.ERROR_MESSAGE);

@@ -37,14 +37,12 @@ public class Jframe_Ventas extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtPrecioPro = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbVentas = new javax.swing.JTable();
         txtScliente = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        txtSproducto = new javax.swing.JTextField();
         txtStockPro = new javax.swing.JTextField();
         btnScliente = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
@@ -73,8 +71,6 @@ public class Jframe_Ventas extends javax.swing.JFrame {
         jLabel12.setText("DNI CLIENTE:");
 
         txtPrecioPro.setEnabled(false);
-
-        jLabel13.setText("COD. PRODUCTO:");
 
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/agregarP.png"))); // NOI18N
@@ -115,7 +111,7 @@ public class Jframe_Ventas extends javax.swing.JFrame {
 
         jLabel18.setText("CANTIDAD:");
 
-        btnProductoS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnProductoS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnProductoS.setText("Buscar Producto");
         btnProductoS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,17 +166,12 @@ public class Jframe_Ventas extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtSproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(txtScliente, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(69, 69, 69)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btnProductoS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnScliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(38, 38, 38)
+                                                .addComponent(txtScliente, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(69, 69, 69)
+                                                .addComponent(btnScliente, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                                            .addComponent(btnProductoS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(50, 50, 50))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,8 +229,6 @@ public class Jframe_Ventas extends javax.swing.JFrame {
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtSproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProductoS)
                     .addComponent(cbComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -303,19 +292,8 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSclienteActionPerformed
 
     private void btnProductoSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoSActionPerformed
-        String idproducto = txtSproducto.getText();
-        pro = new Producto();
-        pro = vd.searchProduct(idproducto);
-        
-        if(pro == null){
-            JOptionPane.showMessageDialog(this, "El producto no existe");
-        }else{
-            txtProductoB.setText(pro.getNombreP());
-            txtPrecioPro.setText(Double.toString(pro.getPrecio()));
-            txtStockPro.setText(Integer.toString(pro.getStock()));
-            
-            
-        }
+        Jframe_listaProducts jlistaP = new Jframe_listaProducts();
+        jlistaP.setVisible(true);
         
     }//GEN-LAST:event_btnProductoSActionPerformed
 
@@ -353,34 +331,12 @@ public class Jframe_Ventas extends javax.swing.JFrame {
         txtPrecioPro.setText(null);
         txtStockPro.setText(null);
         txtCantidadPro.setText(null);
-        txtSproducto.setText(null);
     }
     
     
     
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Jframe_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Jframe_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Jframe_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Jframe_Ventas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+      
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -399,7 +355,6 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -417,7 +372,6 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     private javax.swing.JTextField txtPrecioPro;
     private javax.swing.JTextField txtProductoB;
     private javax.swing.JTextField txtScliente;
-    private javax.swing.JTextField txtSproducto;
     private javax.swing.JTextField txtStockPro;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
