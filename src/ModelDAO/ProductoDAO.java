@@ -128,10 +128,12 @@ public class ProductoDAO implements Producto_Interface{
             rs = ps.executeQuery();
             while(rs.next()){
                 p = new Producto();
+                p.setCodigo(rs.getString("idproducto"));
                 p.setNombreP(rs.getString("nombreP"));
                 p.setMarca(rs.getString("marca"));
                 p.setModelo(rs.getString("modelo"));
                 p.setTipo(rs.getString("tipo"));
+                p.setGarantia(rs.getString("garantia"));
                 p.setStock(rs.getInt("stock"));
                 p.setPrecio(rs.getDouble("precio"));
                 vectorProduct.add(p);

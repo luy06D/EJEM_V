@@ -2,9 +2,14 @@
 package Views;
 
 import Models.Producto;
+import Models.Venta;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import ModelDAO.ProductoDAO;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JTable;
 
 
 public class Jframe_listaProducts extends javax.swing.JFrame {
@@ -12,13 +17,36 @@ public class Jframe_listaProducts extends javax.swing.JFrame {
     
     DefaultTableModel table = new DefaultTableModel();
     ProductoDAO pd = new ProductoDAO();
+    Jframe_Ventas ventas_frame = new Jframe_Ventas();
+
     
     public Jframe_listaProducts() {
         initComponents();
-         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
-         this.setLocationRelativeTo(this);
-         mostrarCabecera();
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        this.setLocationRelativeTo(this);
+        mostrarCabecera();
         listarProductos();
+        
+
+        tablePbuscar.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent mouse_evt){
+                JTable table = (JTable) mouse_evt.getSource();
+                Point point = mouse_evt.getPoint();
+                
+                int filas = table.rowAtPoint(point);
+                if(mouse_evt.getClickCount() == 1){
+                    String producto = tablePbuscar.getValueAt(tablePbuscar.getSelectedRow(), 0).toString();
+                    String precio = tablePbuscar.getValueAt(tablePbuscar.getSelectedRow(), 5).toString();           
+                    String stock = tablePbuscar.getValueAt(tablePbuscar.getSelectedRow(), 4).toString();  
+                   
+                    ventas_frame.productSeleccionado(producto, stock, precio);     
+                    dispose(); 
+                }   
+                
+                
+            }           
+        });
+    
     }
     
     @SuppressWarnings("unchecked")
@@ -45,6 +73,19 @@ public class Jframe_listaProducts extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        (tablePbuscar).setFocusable(false);
+        (tablePbuscar) = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        tablePbuscar.getTableHeader().setResizingAllowed(false);
+        tablePbuscar.getTableHeader().setReorderingAllowed(false);
+        tablePbuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePbuscarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablePbuscar);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -85,6 +126,17 @@ public class Jframe_listaProducts extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tablePbuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePbuscarMouseClicked
+        if(evt.getClickCount() == 2){
+            int filaSelect = tablePbuscar.getSelectedRow();
+            if(filaSelect != -1){
+                String producto = table.getValueAt(filaSelect, 0).toString();
+                
+                System.out.println(producto);
+            }
+        }
+    }//GEN-LAST:event_tablePbuscarMouseClicked
+
         public void listarProductos(){
         
         ArrayList<Producto> vp = new ArrayList<>();
@@ -112,7 +164,7 @@ public class Jframe_listaProducts extends javax.swing.JFrame {
         table.addColumn("Marca");
         table.addColumn("Modelo");
         table.addColumn("Tipo");
-        table.addColumn("Cantidad");
+        table.addColumn("Stock");
         table.addColumn("Precio");
         tablePbuscar.setModel(table);
         

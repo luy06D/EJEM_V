@@ -45,10 +45,10 @@ public class ClienteDAO implements Cliente_Interface{
     }
 
     @Override
-    public Cliente listOne(String dni) {
+    public Cliente listOne(String idcliente) {
         
            try{
-            String queryInsert = "SELECT * FROM clientes WHERE dni = "+dni;
+            String queryInsert = "SELECT * FROM clientes WHERE dni = "+ idcliente;
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryInsert);
             rs = ps.executeQuery();
@@ -71,7 +71,7 @@ public class ClienteDAO implements Cliente_Interface{
     @Override
     public boolean actualizarCliente(Cliente cliente) {
            try{
-            String queryUpdate = "UPDATE clientes SET nombre=?, dni=? WHERE dni="+cliente.getDni();
+            String queryUpdate = "UPDATE clientes SET nombre=?, dni=? WHERE idcliente="+cliente.getIdcliente();
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryUpdate);
             ps.setString(1, cliente.getNombre());
@@ -90,10 +90,10 @@ public class ClienteDAO implements Cliente_Interface{
     }
 
     @Override
-    public boolean eliminarCliente(String dni) {
+    public boolean eliminarCliente(String idcliente) {
              try{
                  
-            String queryDelete = "DELETE FROM clientes WHERE  dni= "+cli.getDni();
+            String queryDelete = "DELETE FROM clientes WHERE  idcliente= "+cli.getIdcliente();
             connec = conexion.getConexion();
             ps = connec.prepareStatement(queryDelete);
   
@@ -118,6 +118,7 @@ public class ClienteDAO implements Cliente_Interface{
             
             while(rs.next()){
                 cli = new Cliente();
+                cli.setIdcliente(rs.getString("idcliente"));
                 cli.setNombre(rs.getString("nombre"));
                 cli.setDni(rs.getString("dni"));
                 cli.setCreate_at(rs.getString("create_at"));

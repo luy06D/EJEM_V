@@ -21,10 +21,19 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     
     public Jframe_Ventas() {
         initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
          this.setLocationRelativeTo(this);
          generarNumVenta();
          mostrarCabecera();
+ 
+    }
+    
+        
+    public void productSeleccionado(String producto, String stock, String precio) {
+        txtProductoB.setText(producto);
+        txtPrecioPro.setText(precio);
+        txtStockPro.setText(stock);
+        System.out.println(producto);
     }
 
   
@@ -271,7 +280,7 @@ public class Jframe_Ventas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnSclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSclienteActionPerformed
         String dni = txtScliente.getText();
         cli = new Cliente();
@@ -332,6 +341,10 @@ public class Jframe_Ventas extends javax.swing.JFrame {
         txtStockPro.setText(null);
         txtCantidadPro.setText(null);
     }
+    
+
+    
+
     
     
     

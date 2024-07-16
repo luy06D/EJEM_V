@@ -7,8 +7,8 @@ public interface Cliente_Interface {
     
     public boolean crearCliente(Cliente cliente);
     public boolean actualizarCliente(Cliente cliente);
-    public boolean eliminarCliente(String dni);
-    public Cliente listOne(String dni);
+    public boolean eliminarCliente(String idcliente);
+    public Cliente listOne(String idcliente);
     public ArrayList<Cliente> listarClientes();
     
 }
