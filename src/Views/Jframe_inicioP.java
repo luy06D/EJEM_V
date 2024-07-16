@@ -224,7 +224,8 @@ public class Jframe_inicioP extends javax.swing.JFrame {
     }//GEN-LAST:event_modulClienteActionPerformed
 
     private void modulUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modulUsuarioActionPerformed
-        
+        Jframe_Usuarios jusuario = new Jframe_Usuarios();
+        jusuario.setVisible(true);
     }//GEN-LAST:event_modulUsuarioActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
