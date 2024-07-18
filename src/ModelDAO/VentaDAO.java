@@ -4,6 +4,8 @@ import Interface.Venta_Interface;
 import Models.Venta;
 import Connection.Conexion;
 import Models.Cliente;
+import Models.DetalleVenta;
+import Models.Pagos;
 import Models.Producto;
 
 import java.sql.*;
@@ -19,8 +21,10 @@ public class VentaDAO implements Venta_Interface{
     PreparedStatement ps;
     ResultSet rs;
     Cliente c;
-    Producto p;
-    
+    Venta v;
+    DetalleVenta dv;
+    Pagos p;
+
     
 
     @Override
@@ -43,30 +47,78 @@ public class VentaDAO implements Venta_Interface{
         }
         return c;
     }
-    
 
     @Override
-    public Producto searchProduct(String codigo) {
-        try{
-            String searchProduct = "SELECT * FROM productos WHERE idproducto ="+ codigo;
+    public int registerVenta(Venta v) {
+         int idVenta = 0 ;
+         
+        String queryInsert = "INSERT INTO ventas (idcliente, fecha_venta, num_venta, tipocomprobante) VALUES (?,?,?,?)";
+    
+        try (Connection connec = conexion.getConexion();
+             PreparedStatement ps = connec.prepareStatement(queryInsert, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, v.getIdcliente());
+            ps.setString(2, v.getFecha_venta());
+            ps.setInt(3, v.getNumVenta());
+            ps.setString(4, v.getTipoComprobante());
+            ps.executeUpdate();
+        
+           // connec.close();
             
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    idVenta = generatedKeys.getInt(1);
+                }
+        }
+            
+        }catch(Exception e){
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null , e);
+        }
+       return idVenta;
+    }
+
+    @Override
+    public boolean registerDetalle(DetalleVenta dv) {
+        try{
+            String queryInsertDetalle = "INSERT INTO detalle_ventas (idproducto, idventa, cantidad, precio_venta) VALUES (?,?,?,?)";
             connec = conexion.getConexion();
-            ps = connec.prepareStatement(searchProduct);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                p = new Producto();
-                p.setNombreP(rs.getString("nombreP"));
-                p.setPrecio(Double.parseDouble(rs.getString("precio")));
-                p.setStock(Integer.parseInt(rs.getString("stock")));
-                
-            }
+            ps = connec.prepareStatement(queryInsertDetalle);
+            ps.setString(1, dv.getIdproducto());
+            ps.setString(2, dv.getIdventa());
+            ps.setInt(3, dv.getCantidad());
+            ps.setDouble(4, dv.getPrecio_venta());
+
+            ps.executeUpdate();
             connec.close();
             
         }catch(Exception e){
-            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null , e);
         }
-        return p;
+       return false;
+        
     }
+
+    @Override
+    public boolean registerPagos(Pagos p) {
+           try{
+            String queryInsertPgo = "INSERT INTO pagos(idventa, tipopago, fecha_pago) VALUES (?,?,?)";
+            connec = conexion.getConexion();
+            ps = connec.prepareStatement(queryInsertPgo);
+            ps.setString(1, p.getIdventa());
+            ps.setString(2, p.getTipoPago());
+            ps.setString(3, p.getFechaPago());
+     
+            ps.executeUpdate();
+            connec.close();
+            
+        }catch(Exception e){
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null , e);
+        }
+       return false;
+       
+    }
+    
+
 
 
 

@@ -3,7 +3,6 @@ package Models;
 
 public class Venta {
     private String idventa;
-    private String idusuario;
     private String idcliente;
     private String fecha_venta;
     private int numVenta;
@@ -15,14 +14,6 @@ public class Venta {
 
     public void setIdventa(String idventa) {
         this.idventa = idventa;
-    }
-
-    public String getIdusuario() {
-        return idusuario;
-    }
-
-    public void setIdusuario(String idusuario) {
-        this.idusuario = idusuario;
     }
 
     public String getIdcliente() {

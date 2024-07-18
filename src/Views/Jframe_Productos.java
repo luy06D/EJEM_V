@@ -334,9 +334,7 @@ public class Jframe_Productos extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         Date d = new Date();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaActual = df.format(d);
-        
-        
+        String fechaActual = df.format(d);      
 
         Producto p = new Producto();
         String tipoSelect = (String) cbTipo.getSelectedItem();
