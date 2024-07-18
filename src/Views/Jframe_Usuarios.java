@@ -17,7 +17,7 @@ public class Jframe_Usuarios extends javax.swing.JFrame {
     
         DefaultTableModel tableUser = new DefaultTableModel();
        UsuarioDAO userdao = new UsuarioDAO();
-        Usuario usuario;
+       Usuario usuario;
   
     public Jframe_Usuarios() {
         initComponents();

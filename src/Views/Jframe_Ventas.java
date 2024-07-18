@@ -12,10 +12,13 @@ import Models.DetalleVenta;
 import Models.Pagos;
 import Models.Venta;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JButton;
 import javax.swing.JTable;
 
 
@@ -385,14 +388,32 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSclienteActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String codigo = txtCodigoP.getText();
-        String producto = txtProductoB.getText();
-        Double precio = Double.parseDouble(txtPrecioPro.getText());
-        int cantidad = Integer.parseInt(txtCantidadPro.getText());
-        Double total = precio * cantidad;
+        String cantidadStr = txtCantidadPro.getText().trim();
         
-        tableV.addRow(new Object[]{codigo, producto, precio, cantidad, total});
+        if (cantidadStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Por favor, ingrese una cantidad válida.","VENTA", JOptionPane.ERROR_MESSAGE);
+        }else{
+            
+            String codigo = txtCodigoP.getText();
+            String producto = txtProductoB.getText();
+            Double precio = Double.parseDouble(txtPrecioPro.getText());
+            int cantidad = Integer.parseInt(txtCantidadPro.getText());
+            Double total = precio * cantidad;
+
+            tableV.addRow(new Object[]{codigo, producto, precio, cantidad, total});
+
+            double totalVenta = 0.0;
+            for (int i = 0; i < tableV.getRowCount(); i++) {
+                double subtotal = (double) tableV.getValueAt(i, 4); 
+                totalVenta += subtotal; 
+            }
+
+        txtTotal.setText(String.valueOf(totalVenta));
         resetProduct();
+            
+        }
+       
+       
          
     }//GEN-LAST:event_btnAgregarActionPerformed
 
@@ -408,24 +429,56 @@ public class Jframe_Ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_tablePbuscarMouseClicked
 
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
-        Date d = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaActual = df.format(d);
-        String tipoComprob = (String) cbComprobante.getSelectedItem();
         
-        Venta venta = new Venta();
-        venta.setIdcliente(idcliente);
-        venta.setFecha_venta(fechaActual);
-        venta.setNumVenta(Integer.parseInt(txtNumVenta.getText()));
-        venta.setTipoComprobante(tipoComprob);
+        String txtDNI = txtScliente.getText().trim();
+        String idcliente = this.idcliente;
+        DefaultTableModel model = (DefaultTableModel) tbVentas.getModel();
+
+        if (txtDNI.isEmpty() || idcliente.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Por favor, complete todos los campos","Campos Incompletos",
+            JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
-        int idVenta = vd.registerVenta(venta);
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Ingrese productos a la tabla", "VENTA",
+            JOptionPane.ERROR_MESSAGE);
+        }else{
+             Date d = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaActual = df.format(d);
+            String tipoComprob = (String) cbComprobante.getSelectedItem();
+
+            Venta venta = new Venta();
+            venta.setIdcliente(idcliente);
+            venta.setFecha_venta(fechaActual);
+            venta.setNumVenta(Integer.parseInt(txtNumVenta.getText()));
+            venta.setTipoComprobante(tipoComprob);
+
+            int idVenta = vd.registerVenta(venta);
+
+            registrarDetalleVenta(idVenta);
+
+            registrarPagos(idVenta, fechaActual);
+
+
+            JOptionPane.showMessageDialog(this, "Venta registrada con exito");
+            resetForm();
+            
+        }
+
+            
         
+
         
+       
+    }//GEN-LAST:event_btnGenerarVentaActionPerformed
+
+    public void registrarDetalleVenta(int idVenta){
         DetalleVenta detalle = new DetalleVenta();
         ArrayList<DetalleVenta> detalleVector = new ArrayList<>();
         DefaultTableModel model = (DefaultTableModel) tbVentas.getModel();
-        
+
         for(int i= 0; i < model.getRowCount(); i++){
              detalle = new DetalleVenta();
              
@@ -441,6 +494,9 @@ public class Jframe_Ventas extends javax.swing.JFrame {
             vd.registerDetalle(det);
         }
         
+    }
+    
+    public void registrarPagos(int idVenta, String fechaActual){
         
         Pagos pago = new Pagos();
         String tipoPago = (String) cbTipoP.getSelectedItem();
@@ -450,13 +506,7 @@ public class Jframe_Ventas extends javax.swing.JFrame {
         
         vd.registerPagos(pago);
         
-        JOptionPane.showMessageDialog(this, "Venta registrada con exito");
-        resetForm();
-    }//GEN-LAST:event_btnGenerarVentaActionPerformed
-
-    
-    
-    
+    }
     
     public void listarProductos(){
         
@@ -479,6 +529,7 @@ public class Jframe_Ventas extends javax.swing.JFrame {
             
         }
     }
+   
     public void generarNumVenta(){
         
         String num = String.format("%05d", numVenta);

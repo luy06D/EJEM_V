@@ -334,43 +334,77 @@ public class Jframe_Productos extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         Date d = new Date();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaActual = df.format(d);      
-
-        Producto p = new Producto();
+        String fechaActual = df.format(d);  
+        
+        String nombreProducto = txtProducto.getText().trim();
+        String marca = txtMarca.getText().trim();
+        String modelo = txtModelo.getText().trim();
+        String precioTexto = txtPrecio.getText().trim();
+        String cantidadTexto = txtCantidad.getText().trim();
         String tipoSelect = (String) cbTipo.getSelectedItem();
         String garantiaSelect = (String) cbGarantia.getSelectedItem();
 
-        p.setNombreP(txtProducto.getText());
-        p.setMarca(txtMarca.getText());
-        p.setModelo(txtModelo.getText());
-        p.setPrecio(Double.parseDouble(txtPrecio.getText()));
-        p.setStock(Integer.parseInt(txtCantidad.getText()));
-        p.setTipo(tipoSelect);
-        p.setGarantia(garantiaSelect);
-        p.setCreate_at(fechaActual);
-        pd.insertProduct(p);
+        if (nombreProducto.isEmpty() || marca.isEmpty() || modelo.isEmpty() || 
+            precioTexto.isEmpty() || cantidadTexto.isEmpty() || 
+            tipoSelect == null || garantiaSelect == null) {
 
-        JOptionPane.showMessageDialog(this, "Registrado con exito");
-        resetForm();
-        listarProductos();
+            JOptionPane.showMessageDialog(this, "Complete todos los campos", "PRODUCTOS", JOptionPane.ERROR_MESSAGE);   
+        }else{
+            Producto p = new Producto();
+
+            p.setNombreP(nombreProducto);
+            p.setMarca(marca);
+            p.setModelo(modelo);
+            p.setPrecio(Double.parseDouble(txtPrecio.getText()));
+            p.setStock(Integer.parseInt(txtCantidad.getText()));
+            p.setTipo(tipoSelect);
+            p.setGarantia(garantiaSelect);
+            p.setCreate_at(fechaActual);
+            pd.insertProduct(p);
+
+            JOptionPane.showMessageDialog(this, "Registrado con exito");
+            resetForm();
+            table.setRowCount(0);
+            listarProductos();
+        
+    }
+
+       
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
        
+        String nombreProducto = txtProducto.getText().trim();
+        String marca = txtMarca.getText().trim();
+        String modelo = txtModelo.getText().trim();
+        String precioTexto = txtPrecio.getText().trim();
+        String cantidadTexto = txtCantidad.getText().trim();
+        String tipoSelect = (String) cbTipo.getSelectedItem();
+        String garantiaSelect = (String) cbGarantia.getSelectedItem();
+
+        if (nombreProducto.isEmpty() || marca.isEmpty() || modelo.isEmpty() || 
+            precioTexto.isEmpty() || cantidadTexto.isEmpty() || 
+            tipoSelect == null || garantiaSelect == null) {
+
+            JOptionPane.showMessageDialog(this, "Seleccione un producto de la table", "PRODUCTOS", JOptionPane.ERROR_MESSAGE);   
+        }else{
         pro = new Producto();
         pro.setCodigo(txtCodigo.getText());
-        pro.setNombreP(txtProducto.getText());
-        pro.setMarca(txtMarca.getText());
-        pro.setModelo(txtModelo.getText());
+        pro.setNombreP(nombreProducto);
+        pro.setMarca(marca);
+        pro.setModelo(modelo);
         pro.setPrecio(Double.parseDouble(txtPrecio.getText()));
         pro.setStock(Integer.parseInt(txtCantidad.getText()));
-        pro.setTipo(cbTipo.getSelectedItem().toString());
-        pro.setGarantia(cbGarantia.getSelectedItem().toString());
+        pro.setTipo(tipoSelect);
+        pro.setGarantia(garantiaSelect);
 
         pd.updateProduct(pro);
         JOptionPane.showMessageDialog(this, "Datos del producto actualizado");
 
         resetForm();
+            
+        }
+       
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -385,11 +419,11 @@ public class Jframe_Productos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     public void listarProductos(){
-        
+        table.setRowCount(0);
         ArrayList<Producto> vp = new ArrayList<>();
         vp = pd.ListProduct();
         
-        table.setRowCount(0);
+
         
         for(int i=0 ; i<vp.size(); i++){
             Object dataProduct[] = 

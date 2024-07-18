@@ -67,12 +67,37 @@ public class UsuarioDAO implements Usuario_Interface {
 
     @Override
     public boolean updateUser(Usuario usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+              String queryUpdate = "UPDATE usuarios SET nom_user=?, claveacceso=? WHERE idusuario= "+u.getIdusuario();
+
+            connec = conexion.getConexion();
+            ps = connec.prepareStatement(queryUpdate);
+            ps.setString(1, u.getNom_user());
+            ps.setString(2, u.getClaveacceso());
+
+            ps.executeUpdate();
+            connec.close();
+            
+        }catch(Exception e){
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null , e);
+        }
+       return false;
     }
 
     @Override
     public boolean deleteUser(String idusuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+           String queryDelete = "DELETE FROM usuarios WHERE idusuario ="+ u.getIdusuario();
+           connec = conexion.getConexion();
+           ps = connec.prepareStatement(queryDelete);
+           ps.executeUpdate();
+           connec.close();
+            
+        }catch(Exception e){
+           Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, e); 
+        }
+        
+        return false;
     }
 
     @Override
